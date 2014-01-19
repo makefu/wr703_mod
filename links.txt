@@ -8,5 +8,5 @@ https://github.com/pepe2k/u-boot_mod
 # TP-Link MR3420v1 16M flash /64M Memory hardware mod with uboot bin
 https://forum.openwrt.org/viewtopic.php?id=32512
 
-# http://hackingbtbusinesshub.wordpress.com/category/ch341a/
-ch341a programmer under linux
+# flash modification for tp-link
+https://forum.openwrt.org/viewtopic.php?id=28343

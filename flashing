@@ -1,0 +1,14 @@
+
+# flashing with ch341a
+
+
+
+from: http://eko.one.pl/forum/viewtopic.php?id=5821
+
+   - Make sure you save a backup of your "art" partition since you will need it later.
+   - Boot the router with the old 4MB chip connected and enter uboot.
+   - Copy content of flash to RAM:    cp.b 0x9f000000 0x81000000 0x3effff
+   - Switch chip_select cable to 8MB chip.
+   - May be not needed, but I did run:   erase all
+   - Copy old flash content form RAM to new flash:   cp.b 0x81000000 0x9f000000 0x3effff
+   - When finished I rebooted the board with:  bootm 9f020000
