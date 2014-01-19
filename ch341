@@ -1,1 +1,4 @@
-modprobe ch341
+Windows:
+
+- Install all the software from ext_documentation/Software-_-driver.zip
+- Chip: MX25L6445EM2I

@@ -1,11 +1,13 @@
+#?/bin/sh
 # on server
-
 ifconfig eth0 192.168.1.100
-# copy art config
-/usr/bin/in.tftpd   -4 -L  -s .
+## copy art config to /tmp
+/usr/bin/in.tftpd   -4 -L  -s /tmp
 
-# via uboot
+# via uboot - connect via serial console
+<write tpl to console>
 
+# /proc/mtd
 dev:    size   erasesize  name
 mtd0: 00020000 00010000 "u-boot"
 mtd1: 000e96a8 00010000 "kernel"
@@ -17,14 +19,7 @@ mtd5: 003d0000 00010000 "firmware"
 # 0x9f020000 -> system
 # 0x9f3f0000 -> art (0x40000  - 0x10000)
 
-- starting memory:
-  bdinfo
-
-erase 0x9f3f0000 +0x10000
-tftpboot 0x80000000 art
-cp.b 0x8000000 0x9f3f0000 0x10000
-
-# flashing all the tings
-  printenv 
-
-
+    erase 0x9f3f0000 +0x10000
+    tftpboot 0x80000000 art
+    cp.b 0x8000000 0x9f3f0000 0x10000
+    reset

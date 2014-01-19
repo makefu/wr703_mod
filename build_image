@@ -1,0 +1,10 @@
+# build all the parts together
+
+- mtd0 -> uboot (probably need to rebuild)
+- mtd1 -> wr703 specific data
+- mtd2 -> the openwrt image
+- mtd3 -> virtual partition (do not use)
+- mtd5_empty -> filler for the new space we have
+- mtd4 -> art file (needs to be at the end)
+
+cat images/wr703_exc0/mtd0 images/wr703_exc0/mtd1 images/wr703_exc0/mtd2 wr703/mtd5_empty.bin images/wr703_exc0/mtd4 > big_exc0.bin
