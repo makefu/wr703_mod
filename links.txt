@@ -1,0 +1,12 @@
+
+# Let's Get More,Make WR703 With 16M Flash
+https://forum.openwrt.org/viewtopic.php?id=41449&p=2
+
+# Modified Uboot sources
+https://github.com/pepe2k/u-boot_mod
+
+# TP-Link MR3420v1 16M flash /64M Memory hardware mod with uboot bin
+https://forum.openwrt.org/viewtopic.php?id=32512
+
+# http://hackingbtbusinesshub.wordpress.com/category/ch341a/
+ch341a programmer under linux

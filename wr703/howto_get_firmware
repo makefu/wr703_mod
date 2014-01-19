@@ -1,0 +1,6 @@
+# Openwrt
+
+    cat /proc/mtd > /tmp/proc_mtd
+    cat /dev/mtd0 > /tmp/mtd0_uboot 
+    ...
+
