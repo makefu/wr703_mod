@@ -1,10 +1,33 @@
+#!/bin/sh
+set -euf
 # build all the parts together
 
-- mtd0 -> uboot (probably need to rebuild)
-- mtd1 -> wr703 specific data
-- mtd2 -> the openwrt image
-- mtd3 -> virtual partition (do not use)
-- mtd5_empty -> filler for the new space we have
-- mtd4 -> art file (needs to be at the end)
+#- mtd0 -> uboot (probably need to rebuild)
+#- mtd1 -> wr703 specific data
+#- mtd2 -> the openwrt image
+#- mtd3 -> virtual partition (do not use)
+#- mtd5_empty -> filler for the new space we have
+#- mtd4 -> art file (needs to be at the end)
+#
+#cat images/wr703_exc0/mtd0 images/wr703_exc0/mtd1 images/wr703_exc0/mtd2 wr703/mtd5_empty.bin images/wr703_exc0/mtd4 > big_exc0.bin
 
-cat images/wr703_exc0/mtd0 images/wr703_exc0/mtd1 images/wr703_exc0/mtd2 wr703/mtd5_empty.bin images/wr703_exc0/mtd4 > big_exc0.bin
+free_space=8m
+test "$#" -eq 0 && echo "please provide folder name in images/" && exit 1
+
+! test -e "images/$1" && echo "profile 'images/$1' does not exist"  && exit 1
+outfile="$1_${free_space}.bin"
+cd "images/$1"
+
+for i in mtd0 mtd1 mtd2 mtd4;do
+  ! test -e $i && echo "$i does not exist in profile"
+done
+
+rm -f mtd5_empty
+truncate --size $free_space mtd5_empty
+
+echo "creating new image with additional '$free_space' of space to images/$outfile"
+
+cat mtd0 mtd1 mtd2 mtd5_empty mtd4 > "../$outfile"
+cd ../..
+ls -l "images/$outfile" || echo "something went wrong :(" 
+echo "finished"
