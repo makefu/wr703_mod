@@ -10,8 +10,15 @@ set -euf
 #- mtd4 -> art file (needs to be at the end)
 #
 #cat images/wr703_exc0/mtd0 images/wr703_exc0/mtd1 images/wr703_exc0/mtd2 wr703/mtd5_empty.bin images/wr703_exc0/mtd4 > big_exc0.bin
-
-free_space=8m
+default_free_space=4m
+if test -n "${free_space:-}";then
+  echo "using given value of free space: $free_space"
+else
+  free_space=$default_free_space
+  echo "using default free disk size of $free_space"
+  echo "  INFO: you can change this by running : free_space=12m $0"
+fi
+echo
 test "$#" -eq 0 && echo "please provide folder name in images/" && exit 1
 
 ! test -e "images/$1" && echo "profile 'images/$1' does not exist"  && exit 1
