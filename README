@@ -1,37 +1,32 @@
-- save the art partition
+
+# upgrade flash memory from wr703
+
+- save the art partition:
+  # on wr703
+  cat /dev/mtd1 > /tmp/mtd1
+  cat /dev/mtd2 > /tmp/mtd2
+  cat /dev/mtd4 > /tmp/mtd4
+
+  # on laptop:
+  mkdir images/my_wrt
+  scp <wr703-ip>:/tmp/mtd1  images/my_wrt/mtd1
+  scp <wr703-ip>:/tmp/mtd2  images/my_wrt/mtd2
+  scp <wr703-ip>:/tmp/mtd4  images/my_wrt/mtd4
+  model=wr703n free_space=12m ./build_image my_wrt
+
+
+# Partitioning description
+from: https://forum.openwrt.org/viewtopic.php?id=41449
 
 Art partition for 16MB Flash :
   16MB total size in hex = 1000000
   64kb art partition size in hex = 10000
   Art partition hex address = 1000000 - 10000 = FF0000
 
-You have forgotten to dump and restore second 64 KiB block from original flash.
-
-
 64KiB uboot + 64KiB data (PIN&MAC) + kernel&fs + empty space as needed + 64KiB
 ART at the end of flash, in total the size of your flash. The maximum size of
-kernel&fs is the size or your flash, less 128KiB uboot+data, less 64KiB ART.
+kernel&fs is the size or your flash, minus 128KiB uboot+data, minus 64KiB ART.
 Data & ART blocks are from backups of that same router.
-
-
-The parts you need:
-
-    1. U-boot. That’s the first 64KiB block of the original flash, or an alternative uboot from pepe2k, namely uboot_for_tp-link_tl-wr703n.bin from here. Whichever you choose, I’ll call it uboot.bin in the following (exactly 65536 bytes).
-    2. The second 64KiB block of the original flash. I’ll call it data.bin in the following.
-    3. OpenWRT Attitude Adjustment image for your device, get it here. I shall call it factory.bin in the following.
-    4. Optionally, create a file empty.bin which is 12648448 bytes in size and contains FF’s (actually, it may contain anything, it shouldn’t matter).
-    5. The last 64KiB of the original flash, I’ll call it art.bin in the following.
-
-
-
-copy /b uboot.bin+data.bin+factory.bin+empty.bin+art.bin image.bin
-
-
-Alternatively, use your hex editor to create an empty image.bin with the size of 16MiB (16777216 bytes), then paste into it (overwrite bytes, NOT insert)
-    1. uboot.bin at file offset 0;
-    2. data.bin at 0x10000;
-    3. factory.bin at 0x20000;
-    4. art.bin at 0xFF0000.
 
 
 # uboot_mod
