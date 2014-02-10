@@ -1,0 +1,3 @@
+[submodule "uboot"]
+	path = uboot
+	url = https://github.com/pepe2k/u-boot_mod.git
