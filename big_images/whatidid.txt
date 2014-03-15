@@ -1,0 +1,5 @@
+140723  dd if=uboot_for_tp-link_tl-mr3020.bin of=custom_mr3020.bin 
+140732  dd if=openwrt-ar71xx-generic-tl-mr3020-v1-squashfs-factory.bin of=custom_mr3020.bin skip=65536 bs=1
+140736  cat uboot_for_tp-link_tl-mr3020.bin custom_mr3020.bin > new_custom_mr3020.bin
+140742  dd if=new_custom_mr3020.bin of=custom_mr3020.bin bs=1 count=16449536
+140745  cat custom_mr3020.bin mr3020_art.bin > new_custom_mr3020.bin
